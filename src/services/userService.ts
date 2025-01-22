@@ -1,12 +1,12 @@
-import userModel from "../models/users";
+import userModel from "../models/userModel";
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 
 interface registerParams{
-    firstName: string;
-    lastName: string;
-    email: string;
-    password: string;
+    firstName: string,
+    lastName: string,
+    email: string,
+    password: string
 }
 interface Login{
     email: string,
