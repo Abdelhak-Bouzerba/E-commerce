@@ -15,7 +15,6 @@ interface Login{
 // register service for a new user
 export const register = async ({firstName,lastName,email,password}: registerParams) => {
     const findUser = await userModel.findOne({ email : email});
-    
     if(findUser) {
         return {data: "user already exist" , statusCode: 400};
     }

@@ -62,7 +62,6 @@ export const updateItemInCart = async ({ userId, productId, quantity }: addItemT
         return {data:"product out of stock", statusCode:400}
     }
 
-    
     const otherCartItem = cart.items.filter((p) => p.product.toString() !== productId);
     let total = otherCartItem.reduce((sum, product) => {
         sum += Number(product.quantity) * Number(product.unitPrice);
@@ -74,4 +73,37 @@ export const updateItemInCart = async ({ userId, productId, quantity }: addItemT
     const updateCart = cart.save();
     return { data: updateCart, statusCode: 201 };
 }
+
+//delete item from the cart
+interface deleteItemFromCart {
+    userId: string,
+    productId: any,
+}
+export const deleteItemFromCart = async({ userId, productId }:deleteItemFromCart) => {
+    const cart = await cartServiceForUser({ userId });
+
+    const existingItem = cart.items.find((p) => p.product.toString() === productId)
+    if (!existingItem) {
+        return { data: "item does not exist", statusCose: 404 };
+    }
+
+    const otherCartItem = cart.items.filter((p) => p.product.toString() !== productId);
+
+    let total = otherCartItem.reduce((sum, product) => {
+        sum += Number(product.quantity) * Number(product.unitPrice);
+        return sum;
+    }, 0);
+    cart.items = otherCartItem;
+    cart.totalAmount = total;
+    const updateCart = cart.save();
+    return { data: updateCart, statusCode: 201 };
+}
+//delte all items from the cart
+export const clearCart = async ({ userId }: createCartForUser) => {
+    const cart = await cartServiceForUser({ userId })
+    cart.items = [];
+    cart.totalAmount = 0;
+    const updatedCart = await cart.save();
+    return { data: updatedCart, statusCode: 201 };
+}; 
 
