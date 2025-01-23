@@ -1,15 +1,15 @@
-import mongoose, { Schema, Document } from "mongoose"
+import mongoose, { Schema, Document, ObjectId } from "mongoose"
 import { IProduct } from "./productModel";
 
 const cartStatusEnum = ["active", "completed"];
 
-export interface ICartItem extends Document{
+export interface ICartItem{
     product:IProduct,
-    unitPrice: Number,
-    quantity: Number,
+    unitPrice: any,
+    quantity: any,
 }
 export interface ICart extends Document{
-    userId: String,
+    userId: ObjectId | String,
     items: ICartItem[],
     totalAmount: Number,
     status : "active" | "completed"
