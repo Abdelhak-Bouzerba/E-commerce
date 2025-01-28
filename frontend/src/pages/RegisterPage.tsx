@@ -1,16 +1,25 @@
 import { Box, Button, Container, TextField, Typography } from "@mui/material";
 import { useRef, useState } from "react";
 import { BASE_URL } from "../constant/BASE_URL";
+import { useAuth } from "../context/Auth/AuthContext";
 
 
 
 const RegisterPage = () => {
     const [error, setError] = useState("");
+
+    const { login } = useAuth();
+    
     const onSubmit = async () => {
         const firstName = firstNameRef.current?.value;
         const lastName = lastNameRef.current?.value;
         const email = emailRef.current?.value;
         const password = passwordRef.current?.value;
+        //validate the form data
+        if (!firstName || !lastName || !email || !password) {
+            setError("check submiting data");
+            return;
+        }
         //call the api to new register
         const response = await fetch(`${BASE_URL}users/register`, {
             method: 'POST',
@@ -24,11 +33,17 @@ const RegisterPage = () => {
                 password,
             })
         });
+
         if (!response.ok) {
             setError('User already exists!');
         }
-        const data = await response.json();
-        console.log(data);
+
+        const token = await response.json();
+        if (!token) {
+            setError("incorrect token");
+            return;
+        }
+        login(email, token);
     }
     const firstNameRef = useRef<HTMLInputElement>(null);
     const lastNameRef = useRef<HTMLInputElement>(null);
@@ -39,8 +54,8 @@ const RegisterPage = () => {
             <Box sx={{display:'flex' , justifyContent:'center', alignItems:'center' , mt:4,  flexDirection:'column'}}>
                 <Typography variant="h6">Register New Account</Typography>
                 <Box sx={{ display: 'flex' , flexDirection:'column', gap:2,mt:2,border:1,borderColor:"#f5f5f5",p:2}}>
-                    <TextField inputRef={firstNameRef} name="fullName" label="Full Name" />
-                    <TextField inputRef={lastNameRef} name="fullName" label="Full Name" />
+                    <TextField inputRef={firstNameRef} name="firstName" label="First Name" />
+                    <TextField inputRef={lastNameRef} name="lastName" label="Last Name" />
                     <TextField inputRef={emailRef} name="email" label="Email"/>
                     <TextField inputRef={passwordRef} type="password" name="password" label="Password" />
                     <Button onClick={onSubmit} variant="contained">Register</Button>
