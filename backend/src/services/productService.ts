@@ -8,9 +8,9 @@ export const getAllProducts = async () => {
 export const seedInitialeProducts = async () => {
     try {
         const products = [
-        { title: "Wireless Headphones", image: "image1.jpg", price: 49, stock: 120 },
-        { title: "Smart Watch", image: "image2.jpg", price: 99, stock: 50 },
-        { title: "Laptop", image: "image3.jpg", price: 499, stock: 10 },
+            {title: "Dell laptop" , image:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTwsnV5I1Ex5SNA9bWWrPuBrBT3SWCxzZHV-w&s" , price: 500 , stock: 10},
+            {title: "HP laptop" , image:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQNPkIzbCliA21Ho9XE-gmP2mHiHwubtJjlww&s" , price: 450 , stock: 20},
+            {title: "Asus laptop" , image:"https://www.asus.com/media/Odin/Websites/global/Series/14.png" , price: 1000 , stock: 6},
     ];
     const existingProduct = await getAllProducts();
     if ( existingProduct.length === 0) {
