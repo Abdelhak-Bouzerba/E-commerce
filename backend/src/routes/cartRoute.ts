@@ -7,7 +7,7 @@ const router = express.Router();
 router.get("/", validateJwt, async (req: ExtendRequest, res) => {
     try {
         const userId = req.user._id;
-        const cart = await cartServiceForUser({ userId })
+        const cart = await cartServiceForUser({ userId , populateProduct:true })
         res.status(200).send(cart);
     }catch (err: any) {
         res.status(500).send(err.message);
