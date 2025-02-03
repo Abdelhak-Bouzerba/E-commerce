@@ -40,8 +40,8 @@ router.delete('/items/:productId', validateJwt, async (req: ExtendRequest, res) 
     try {
         const userId = req.user._id;
         const  productId  = req.params.productId;
-        const result = await deleteItemFromCart({ userId, productId });
-        res.status(200).send(result.data);
+        const {data , statusCode} = await deleteItemFromCart({ userId, productId });
+        res.status(statusCode).send(data);
     }catch (err: any) {
         res.status(500).send(err.message);
     }
