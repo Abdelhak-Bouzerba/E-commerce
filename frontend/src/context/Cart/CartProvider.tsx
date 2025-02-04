@@ -9,6 +9,7 @@ const CartProvider: FC<PropsWithChildren> = ({ children }) => {
     const [cartItems, setCartItems] = useState<CartItem[]>([]);
     const [totalAmount, setTotalAmount] = useState<number>(0);
     const [error, setError] = useState('');
+    let isCleared = false;
 
     console.log(error);
 
@@ -151,8 +152,32 @@ const CartProvider: FC<PropsWithChildren> = ({ children }) => {
             console.error(error);
         }
     }
+    const clearCart = async () => {
+        try {
+            const response = await fetch(`${BASE_URL}carts`, {
+                method: "DELETE",
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+
+            if (!response.ok) {
+                setError("Failed to Delete cart!");
+            }
+            
+            const cart = await response.json();
+            if (!cart) {
+                setError("Failed to parse cart data");
+            }
+            setCartItems([]);
+            setTotalAmount(0);
+            isCleared = true;
+        } catch (error) {
+            console.error(error);
+        }
+    }
     return (
-        <CartContext.Provider value={{ cartItems, totalAmount, addItemToCart, updateItemInCart,removeItemFromCart }}>
+        <CartContext.Provider value={{ cartItems, totalAmount, addItemToCart, updateItemInCart,removeItemFromCart,clearCart,isCleared }}>
             {children}
         </CartContext.Provider>
     )
