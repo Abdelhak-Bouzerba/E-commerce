@@ -133,8 +133,8 @@ export const clearCart = async ({ userId }: createCartForUser) => {
     const cart = await cartServiceForUser({ userId })
     cart.items = [];
     cart.totalAmount = 0;
-    const updatedCart = await cart.save();
-    return { data: updatedCart, statusCode: 201 };
+    await cart.save();
+    return { data: await cartServiceForUser({userId , populateProduct:true}), statusCode: 201 };
 };
 
 //checkout the cart
