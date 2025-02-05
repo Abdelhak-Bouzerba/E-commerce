@@ -32,6 +32,9 @@ function Navbar() {
   const toLogin = () => {
     navigate("/login");
   };
+  const toRegister = () => {
+    navigate("/register");
+  };
   const handleLogOut = () => {
     logOut();
     navigate("/");
@@ -118,6 +121,7 @@ function Navbar() {
                     </Grid>
                   </Tooltip>
                   <Menu
+                    onClick={handleCloseUserMenu}
                     sx={{ mt: "45px" }}
                     id="menu-appbar"
                     anchorEl={anchorElUser}
@@ -133,7 +137,7 @@ function Navbar() {
                     open={Boolean(anchorElUser)}
                     onClose={handleCloseUserMenu}
                   >
-                    <MenuItem onClick={handleCloseUserMenu}>
+                    <MenuItem onClick={() => navigate("/myOrders")}>
                       <Typography sx={{ textAlign: "center" }}>
                         My Orders
                       </Typography>
@@ -146,9 +150,10 @@ function Navbar() {
                   </Menu>
                 </>
               ) : (
-                <Button variant="contained" color="success" onClick={toLogin}>
-                  Login
-                </Button>
+                <Box sx={{display:'flex',gap:1}}>
+                  <Button variant="contained" color="success" onClick={toRegister}>register</Button>
+                  <Button variant="contained" color="success" onClick={toLogin}>Login</Button>
+                </Box>
               )}
             </Box>
           </Box>
