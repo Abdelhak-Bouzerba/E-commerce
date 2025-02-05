@@ -135,7 +135,7 @@ function Navbar() {
                   >
                     <MenuItem onClick={handleCloseUserMenu}>
                       <Typography sx={{ textAlign: "center" }}>
-                        Profile
+                        My Orders
                       </Typography>
                     </MenuItem>
                     <MenuItem onClick={handleLogOut}>

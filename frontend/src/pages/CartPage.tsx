@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 const CartPage = () => {
     const { totalAmount, cartItems, updateItemInCart, removeItemFromCart, clearCart, isCleared } = useCart();
     const navigate = useNavigate();
-    
+
     const handleQuantity = (productId: string, quantity: number) => {
         if (quantity <= 0) {
             return;
@@ -25,7 +25,7 @@ const CartPage = () => {
                 {!isCleared ? (<Button onClick={handleClearCart}>Clear Cart</Button>):(<Box></Box>)}
             </Box>
             {cartItems.length ?
-                (<Box display={"flex"} flexDirection={"column"} gap={4}>
+                (<Box display={"flex"} flexDirection={"column"} gap={2}>
                     {cartItems.map((item) => (
                         <Box
                             display={"flex"}
